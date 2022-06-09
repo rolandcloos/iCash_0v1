@@ -13,35 +13,60 @@
   <body>
 <?php
 if (@$GLOBALS['error'] && APP_CONFIG['environment'] == 'DEV') {
-   
-?>
-  <div class="container-fluid btn-dark">
-    Classes:
-      <div class="row">
-<?php
-$dec_classes = get_declared_classes();
-foreach ($dec_classes as $key => $val) {
-  
-  if(\substr($val,0,5) == "icash"){
-?>
-        <div class="col-sm-2">
-          <p>
-            <?=$val;?>
-          </p>
-        </div>
+      
+  // Ausgabe der geladenen Klassen
+          ?>
+            <div class="container-fluid btn-dark">
+              Classes:
+                <div class="row">
+                  <?php
+                    $dec_classes = get_declared_classes();
+                    foreach ($dec_classes as $key => $val) {     
+                      if(\substr($val,0,5) == "icash"){
+                  ?>
+                            <div class="col-sm-2">
+                              <p>
+                                <?=$val;?>
+                              </p>
+                            </div>
 
+                  <?php
+                      }
+                    }
+                  ?>      
+                </div> <!-- end row -->
+            </div> <!-- end container -->
+    
 <?php
-  }
-}
-?>      
-      </div>
+    // Ausgabe von WARNINGS
+?>
+  
+  <div class="alert alert-warning alert-dismissible show">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <h3>Fehler</h3>
+    <hr>
+<?php
+        $rCnt=0;
+        if (@$GLOBALS['info']) {
+          foreach (@$GLOBALS['info'] as $type => $errors) {
+            foreach ($errors as $key => $val) {
+              if($rCnt == 0) { echo "<p>Class: Number -> Error</p>"; }
+              echo "<p>$type: $key -> $val</p>";
+              $rCnt++;
+            }
+          }
+        }
+?>
   </div>
+
+  <?php
+    // Ausgabe von ERRORS
+?>
   
-  
-        <div class="alert alert-warning alert-dismissible show">
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        <h3>Fehler</h3>
-        <hr>
+  <div class="alert alert-error alert-dismissible show">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <h3>Fehler</h3>
+    <hr>
 <?php
         $rCnt=0;
         if (@$GLOBALS['error']) {
@@ -54,7 +79,8 @@ foreach ($dec_classes as $key => $val) {
           }
         }
 ?>
-    </div>
+  </div>
+
 <?php     
 }     
     

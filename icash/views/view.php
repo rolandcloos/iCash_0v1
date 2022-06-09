@@ -19,7 +19,7 @@ class View {
     
 
     public function assign($vars) { 
-        if (count($vars) == count($vars, COUNT_RECURSIVE)) 
+        if (@count($vars) == @count($vars, COUNT_RECURSIVE)) 
         {   
             $this->vars = $vars;
         } else {
@@ -31,7 +31,6 @@ class View {
                 }
             }
         }
-        
     }
 
     public function show() {
@@ -39,7 +38,7 @@ class View {
         echo "SHOW Method from VIEW Class<br>";
         extract($this->vars);
         $title = "iCash | ProductList";
-        include("templates/product_index.php");
+        
     }
 
 

@@ -1,29 +1,30 @@
 <?php
 
 namespace icash\controllers;
-use \icash\models\ProductModel;
 
 class ProductController Extends Controller
 {
     public function show($id = null)
     {
 
-  //      $model = new  ;
+        $model = new  \icash\models\ProductModel();
         
         if ($id == null)
-        { 
+        {
+            
             $view = new \icash\views\ProductView();
-            $result = ProductModel::getAll();
+            $result = $model->getAll();
             $view->assign($result);
-            $view->showList();  
+            $view->showList();
+            
         }
-        else{  
+        else{
+            
             $view = new \icash\views\ProductView();
-            $result = ProductModel::getOne($id);
-            $view->assign($result);
+            $view->assign($model->getOne($id));
             $view->showDetail();
+    
         }
-       var_dump( print_r($this->user,1) );
     }
     
 

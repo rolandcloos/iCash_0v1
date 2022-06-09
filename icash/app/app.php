@@ -19,10 +19,6 @@ class App
         foreach($this->ViewTitles as $tc => $val) {
             $this->SubTitles[$val] = APP_CONFIG['ViewTitles']['subtitle_' . $tc];
         }
-
-//echo "<h3>APP.PHP</h3>";
-//echo "<pre>".print_r($this->ViewTitles,1)."</pre>";
-//echo "<pre>".print_r($this->SubTitles,1)."</pre>";
         
         extract($_REQUEST);
         $parts = explode("/", @$url);

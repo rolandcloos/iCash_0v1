@@ -12,19 +12,21 @@ class UserController
         session_start();
         if(!@$_SESSION['user']) // Keine User Session, also LOGIN
         {
-            $info[] = "Bitte loggen Sie sich ein.";
+            $info['info'] = "Bitte loggen Sie sich ein.";
+            echo "<script>console.log('NOT LOGGED IN !')</script>";
             $this->login($info);
         } else { // User Session vorhanden...
             if($_SESSION['user']['last_access'] < time() - APP_CONFIG['APP']['session_time']) // ... Session aber nicht mehr aktuell, also LOGIN
             {
                 session_destroy();
-                $info[0] = "Ihre Sitzung ist abgelaufen. Bitte neu einloggen.";
+                $info['info'] = "Ihre Sitzung ist abgelaufen.<br>Bitte neu einloggen.";
+                echo "<script>console.log('Ihre Sitzung ist abgelaufen. Bitte neu einloggen.');</script>";
                 $this->login($info);
             }
             else { // Last Access für User neu setzen
                 $_SESSION['user']['last_access'] = time();
             }
-        }
+        } 
     }
 
     public function login($info)
@@ -32,7 +34,7 @@ class UserController
         if(!$_POST) { // wurde das Formular noch nicht abgeschickt, dann Login Form anzeigen
             $view = new \icash\views\UserView();
             $view->assign($info);
-            $view -> login();
+            $view->login();
         } else { // Es wurde bereits das Formular abgeschickt
             $user = new \icash\models\UserModel();
             if($userdata = $user->checkLogin($_POST)) // Daten mit stimmen mit UserModel / DataBase überein
@@ -40,10 +42,14 @@ class UserController
                 // Session setzen
                 $_SESSION['user'] = array();
                 $_SESSION['user']['firstname'] = $userdata['name'];
-                $_SESSION['user']['last_access'] = time(); 
+                $_SESSION['user']['last_access'] = time();  
             }
             else{
                 // Fehlerhaftes Login!!!
+                $info['info'] = "Logindaten fehlerfaft.<br>Bitte erneut versuchen.";
+                $view = new \icash\views\UserView();
+                $view->assign($info);
+                $view->login();
             }           
         }
     }

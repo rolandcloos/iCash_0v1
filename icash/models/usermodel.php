@@ -1,6 +1,7 @@
 <?php
 
 namespace icash\models;
+use icash\app\db;
 
 class UserModel extends Model
 {
@@ -10,9 +11,10 @@ class UserModel extends Model
     }
     
     public function checkLogin($postdata) {
+        $db = new DB();
         extract($postdata);
-        $query [0]= "SELECT * FROM user WHERE email = :email AND pass = :password;";
-        $sql = $this->db->query( $query );
+        $query = "SELECT * FROM user WHERE email = :email AND pass = :password;";
+        $sql = $db->query( $query );
         $sql->param( ":email", $email );
         $sql->param( ":password", $password );
         return $sql->result();

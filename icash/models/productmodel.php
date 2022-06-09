@@ -10,19 +10,20 @@ class ProductModel extends Model
         parent::__construct();
     }
     
-    public static function getAll() {
-        $query [0]= "SELECT * FROM product;";
+    public function getAll() {
         $db = new DB();
+        $query = "SELECT * FROM product;";
         $sql = $db->query( $query );
-        return $sql->result();
+        return $sql->results();
     }
 
-    public static function getOne($id) {
-        $query [0]= "SELECT * FROM product WHERE id=:id;";
+    public function getOne($id) {
         $db = new DB();
+        $query = "SELECT * FROM product WHERE id=:id;";
         $sql = $db->query( $query );
         $sql->param( ":id", $id );
-        return $sql->result();
+        return $sql->results();
+
     }
 
 }

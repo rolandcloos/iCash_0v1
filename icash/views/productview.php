@@ -8,6 +8,10 @@ class ProductView extends View{
         parent::__construct();
     }
 
+    public function __destruct() {
+        parent::__destruct();
+    }
+
     public function show() {
         extract($this->vars);
         $title = "iCash | ProductList";

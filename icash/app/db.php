@@ -20,7 +20,7 @@ class DB
     }
 
     public function query( $query ) {
-        $this->statement = $this->connection->prepare( implode( " ", $query ) );
+        $this->statement = $this->connection->prepare( $query );
         return $this;
     }
 
@@ -57,12 +57,12 @@ class DB
         return $this->statement->fetchColumn();
     }
 
-    public function resultOne() {
+    public function result() {
         $this->execute();
         return $this->statement->fetch( \PDO::FETCH_ASSOC );
     }
 
-    public function result() {
+    public function results() {
         $this->execute();
         return $this->statement->fetchAll( \PDO::FETCH_ASSOC );
     }
