@@ -1,6 +1,6 @@
 <?php
 
-namespace icash\controllers;
+namespace controllers;
 
 class HomeController Extends Controller
 {

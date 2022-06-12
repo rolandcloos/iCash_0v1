@@ -1,7 +1,7 @@
 <?php
 
-namespace iCash\app;
-
+namespace app;
+use helpers\Logger;
 
 class App
 {
@@ -10,27 +10,27 @@ class App
 
     public function __construct()
     {
-        DEFINE("APP_CONFIG" , parse_ini_file("config.ini", true)); // True für die Überschriften ([DB]; [APP], usw.)
+        $msg = 'APP::test';
 
-        $this->cPath = APP_CONFIG['APP']['PATH'] . "/controllers/";
-        $this->cClass = "\\" . APP_CONFIG['APP']['PATH'] . "\controllers\\";
+        DEFINE("APP_CONFIG" , parse_ini_file("config.ini", true)); // True für die Überschriften ([DB]; [APP], usw.)
+        $this->path = APP_CONFIG['APP']['PATH'] ;
+        $this->cPath = $this->path . "/controllers/";
+        $this->cClass = "\\" . $this->path . "controllers\\";
         
         $this->ViewTitles = APP_CONFIG['ViewTitles']['title'];
         foreach($this->ViewTitles as $tc => $val) {
             $this->SubTitles[$val] = APP_CONFIG['ViewTitles']['subtitle_' . $tc];
-        }
-        
+        }        
         extract($_REQUEST);
         $parts = explode("/", @$url);
         
         $ctrl = $parts[0] ?? 'home';
 
 
-            if(file_exists($this->cPath . $ctrl . "controller.php"))
-            {
-                $this->cClass = $this->cClass . $ctrl . "controller";
-            }
-            else{
+
+            $this->cClass = $this->cClass . $ctrl . "controller";
+            
+            if(!$this->cClass){
                 $GLOBALS['error']['App'][] = "This controller doesnt exist. GO TO: home";
                 $this->cClass = $this->cClass . "homecontroller";
             }
@@ -40,8 +40,6 @@ class App
 
         $action = $parts[1] ?? null;
         $id = $parts[2] ?? null;
-
-//echo $ctrl . " -> " . $action . " => " . $id;
 
         if(method_exists($controller, $action))
         {
@@ -55,6 +53,10 @@ class App
             echo $controller->$action();
         }
 
+    }
+
+    public static function run() {
+        return new static();
     }
 }
 

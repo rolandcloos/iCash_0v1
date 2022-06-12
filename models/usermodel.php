@@ -1,7 +1,7 @@
 <?php
 
-namespace icash\models;
-use icash\app\db;
+namespace models;
+use app\db;
 
 class UserModel extends Model
 {

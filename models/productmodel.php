@@ -1,7 +1,7 @@
 <?php
 
-namespace icash\models;
-use icash\app\DB;
+namespace models;
+use app\DB;
 
 class ProductModel extends Model
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace icash\views;
+namespace views;
 
 class ProductView extends View{
 

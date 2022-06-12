@@ -1,6 +1,6 @@
 <?php
 
-namespace icash\controllers;
+namespace controllers;
 
 //echo \get_class($this) . " loaded ... <br>";
 
@@ -8,9 +8,9 @@ class UserController
 {
     public function __construct()
     {
-        
+echo "UserController started...";
         session_start();
-        if(!@$_SESSION['user']) // Keine User Session, also LOGIN
+        if(!$_SESSION || !@$_SESSION['user']) // Keine User Session, also LOGIN
         {
             $info['info'] = "Bitte loggen Sie sich ein.";
             echo "<script>console.log('NOT LOGGED IN !')</script>";
@@ -32,11 +32,11 @@ class UserController
     public function login($info)
     {
         if(!$_POST) { // wurde das Formular noch nicht abgeschickt, dann Login Form anzeigen
-            $view = new \icash\views\UserView();
+            $view = new \views\UserView();
             $view->assign($info);
             $view->login();
         } else { // Es wurde bereits das Formular abgeschickt
-            $user = new \icash\models\UserModel();
+            $user = new \models\UserModel();
             if($userdata = $user->checkLogin($_POST)) // Daten mit stimmen mit UserModel / DataBase überein
             {
                 // Session setzen
@@ -47,7 +47,7 @@ class UserController
             else{
                 // Fehlerhaftes Login!!!
                 $info['info'] = "Logindaten fehlerfaft.<br>Bitte erneut versuchen.";
-                $view = new \icash\views\UserView();
+                $view = new \views\UserView();
                 $view->assign($info);
                 $view->login();
             }           

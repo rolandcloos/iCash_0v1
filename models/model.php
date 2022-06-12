@@ -1,6 +1,6 @@
 <?php
 
-namespace icash\models;
+namespace models;
 
 class Model
 {

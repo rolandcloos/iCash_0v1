@@ -1,6 +1,6 @@
 <?php
 
-namespace icash\app;
+namespace app;
 
 class DB
 {
@@ -74,7 +74,6 @@ class DB
 
     private function connect() {
             extract($this->config);
-            $conString = "mysql:host=" . $host . ";dbname=" . $db . ";charset=UTF8MB4";
             $connectionString  = "mysql:host=$host;port=$port;dbname=$db;charset=UTF8MB4;";
             try
             {

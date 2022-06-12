@@ -1,6 +1,6 @@
 <?php
 
-namespace icash\views;
+namespace views;
 
 class View {
 
@@ -8,7 +8,6 @@ class View {
 
     public function __construct()
     {
-
         include("templates/header.php");
     }
 
